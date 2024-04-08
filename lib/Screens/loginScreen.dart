@@ -1,3 +1,4 @@
+import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/Screens/registerScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 
 
 class _LoginScreenState extends State<LoginScreen> {
-
+final LoginController logincontroller=Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
   String? username;
   String? password;
@@ -20,6 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
 void _saveForm(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
+      logincontroller.fetchLogin(username, password, context);
+     
       // fetchdata(context);
       // loginController.fetchLogin(username, password, context);
       // feature.fetchProduct(productName);
@@ -59,6 +62,7 @@ void _saveForm(BuildContext context) {
                       child: Column(
                         children: [
                           TextFormField(
+                            initialValue:'dev@desss.com' ,
                             onSaved: (value) {
                               setState(() {
                                 username = value;
@@ -79,6 +83,7 @@ void _saveForm(BuildContext context) {
                             },
                           ),
                           TextFormField(
+                            initialValue: '\$heshU98',
                             onSaved: (value) {
                               setState(() {
                                 password = value;

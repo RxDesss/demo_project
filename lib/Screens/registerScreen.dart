@@ -1,3 +1,4 @@
+import 'package:demo_project/GetX%20Controller/registerController.dart';
 import 'package:demo_project/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final RegisterController registercontroller=Get.put(RegisterController());
   final formkey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -59,6 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _submitForm() {
     if (formkey.currentState != null && formkey.currentState!.validate()) {
+        registercontroller.fetchRegister(_nameController.text, _emailController.text, _passwordController, context);
       // Validation passed, perform login or any other action here
       // String name = _nameController.text;
       // String password = _passwordController.text;

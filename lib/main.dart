@@ -1,5 +1,7 @@
+import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:demo_project/Screens/loginScreen.dart';
 import 'package:demo_project/Screens/registerScreen.dart';
+import 'package:demo_project/Screens/tabNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/loginscreen':(context)=>const LoginScreen(),
         '/registescreen':(context)=>const RegisterScreen(),
+        '/tabnavigation':(context)=>const TabNavigation()
       },
     );
   }
