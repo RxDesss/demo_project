@@ -1,4 +1,5 @@
 import 'package:demo_project/Screens/loginScreen.dart';
+import 'package:demo_project/Screens/registerScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/loginscreen',
       routes: {
         '/loginscreen':(context)=>const LoginScreen(),
-
+        '/registescreen':(context)=>const RegisterScreen(),
       },
     );
   }
