@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController {
   List<dynamic> loginList = [].obs;
+  final HomeContoller homeContoller=Get.put(HomeContoller());
 
   void _showAlertDialog(BuildContext context) {
     showDialog(
@@ -36,15 +38,16 @@ class LoginController extends GetxController {
   void fetchLogin(username, password, context) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=static_login&email=$username&password=$password';
-    print(url);
+    // print(url);
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       final body = res.body;
       final json = jsonDecode(body);
       loginList = json['data'];
-      print(loginList);
+      homeContoller.fetchDataAndNavigate(context);
+      // print(loginList);
       // Get.to(() => HomeScreen());
-      Navigator.pushReplacementNamed(context,'/tabnavigation');
+      // Navigator.pushReplacementNamed(context,'/tabnavigation');
       // List<dynamic> data = json.decode(res.body)['data']; // Explicitly defining data type
       // loginList.value = data.map((item) => Login.fromJson(item)).toList();
       // print(data);
