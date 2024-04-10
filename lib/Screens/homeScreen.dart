@@ -1,5 +1,6 @@
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -13,18 +14,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 final LoginController loginController = Get.put(LoginController());
-final HomeContoller homeController=Get.put(HomeContoller());
+final HomeContoller homeController = Get.put(HomeContoller());
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   String? userName;
   List<String> apiproductNames = [];
   List<String> apiproductPrice = [];
   List<String> apiproductImage = [];
   List<String> apicategoryName = [];
   List<String> apicategoryImage = [];
-
-
 
   void getData() {
     for (var obj in loginController.loginList) {
@@ -33,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
   }
-   getFeatueProduct() {
+
+  getFeatueProduct() {
     for (var obj in homeController.featureProductList) {
-      
       setState(() {
         apiproductPrice.add(obj['product_price']);
         apiproductNames.add(obj['product_name']);
@@ -81,12 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   void initState() {
-       super.initState();
+    super.initState();
     getData();
     getFeatueProduct();
     getCategoryProduct();
- 
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
               imageCarousel(context, imageList),
               search(context),
               categoryImage(context, categoryImages),
-              featureProducts(context,apiproductImage,apiproductPrice,apiproductNames),
+              featureProducts(
+                  context, apiproductImage, apiproductPrice, apiproductNames),
               categoryProduct(context, apicategoryName, apicategoryImage)
             ],
           ),
@@ -170,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
 Widget search(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
@@ -214,7 +212,7 @@ Widget search(BuildContext context) {
             // Update starts here
             child: Row(
               mainAxisSize:
-              MainAxisSize.min, // To keep the icon and text close together
+                  MainAxisSize.min, // To keep the icon and text close together
               children: [
                 Icon(Icons.camera_alt, size: 20.0), // Adjust the size as needed
                 SizedBox(width: 4), // Space between icon and text
@@ -251,16 +249,18 @@ Widget categoryImage(context, categoryImages) {
           itemCount: categoryImages.length,
           itemBuilder: (context, index) {
             return Container(
-         width: MediaQuery.of(context).size.width*0.28, // Set the width of each image container
-             
+              width: MediaQuery.of(context).size.width *
+                  0.28, // Set the width of each image container
+
               margin: EdgeInsets.only(
-                  left: 10.0, right: index == categoryImages.length - 1 ? 10.0 : 0),
+                  left: 10.0,
+                  right: index == categoryImages.length - 1 ? 10.0 : 0),
               decoration: BoxDecoration(
                 color: Colors.blue[50],
                 borderRadius:
                     BorderRadius.circular(100.0), // Adjust the rounding here
                 image: DecorationImage(
-            image:AssetImage(categoryImages[index]),
+                  image: AssetImage(categoryImages[index]),
                   fit: BoxFit.scaleDown,
                 ),
               ),
@@ -272,11 +272,12 @@ Widget categoryImage(context, categoryImages) {
   );
 }
 
-Widget featureProducts(context,apiproductImage,apiproductPrice,apiproductNames){
-   return Column(
+Widget featureProducts(
+    context, apiproductImage, apiproductPrice, apiproductNames) {
+  return Column(
     children: [
       Padding(
-        padding: const EdgeInsets.only(bottom: 10,top: 10),
+        padding: const EdgeInsets.only(bottom: 10, top: 10),
         child: Text(
           "Feature Products ",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -288,52 +289,64 @@ Widget featureProducts(context,apiproductImage,apiproductPrice,apiproductNames){
         //  color: Colors.blue,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount:homeController.featureProductList.length,
+          itemCount: homeController.featureProductList.length,
           itemBuilder: (context, index) {
             return Container(
-              width: MediaQuery.of(context).size.width*0.30, // Set the width of each image container
-             
+              width: MediaQuery.of(context).size.width *
+                  0.30, // Set the width of each image container
+
               margin: EdgeInsets.only(
-                  left: 10.0, right: index == apiproductImage.length - 1 ? 10.0 : 0),
+                  left: 10.0,
+                  right: index == apiproductImage.length - 1 ? 10.0 : 0),
               decoration: BoxDecoration(
                 color: Colors.blue[50],
                 borderRadius:
                     BorderRadius.circular(10.0), // Adjust the rounding here
-               
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                     width: double.infinity,
-                    height:  MediaQuery.of(context).size.height * 0.08,
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.08,
                     color: Colors.amber,
-                    child: Image.network(apiproductImage[index],fit: BoxFit.cover,),
+                    child: Image.network(
+                      apiproductImage[index],
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                     width:MediaQuery.of(context).size.width * 0.13,
-                     height:MediaQuery.of(context).size.height * 0.022,
-                                     
-                     decoration: BoxDecoration(
-                        color: Colors.green,
-                      borderRadius: BorderRadius.circular(15.0)
-                     ),
-                     child: Padding(
-                       padding: const EdgeInsets.only(left: 3),
-                       child: Text("\$${apiproductPrice[index]}",style: TextStyle(fontSize: 12,color: Colors.white),),
-                     ),
+                      width: MediaQuery.of(context).size.width * 0.13,
+                      height: MediaQuery.of(context).size.height * 0.022,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(15.0)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 3),
+                        child: Text(
+                          "\$${apiproductPrice[index]}",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
-                 Padding(
-                   padding: const EdgeInsets.all(1.0),
-                   child: Container(
-                    height:MediaQuery.of(context).size.height * 0.068,
-                    child: Center(child: Text("${apiproductNames[index]}", textAlign: TextAlign.center,style: TextStyle(fontSize: 11),overflow: TextOverflow.fade,))),
-                 )
-                ],),
+                  Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.068,
+                        child: Center(
+                            child: Text(
+                          "${apiproductNames[index]}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 11),
+                          overflow: TextOverflow.fade,
+                        ))),
+                  )
+                ],
+              ),
             );
           },
         ),
@@ -341,49 +354,65 @@ Widget featureProducts(context,apiproductImage,apiproductPrice,apiproductNames){
     ],
   );
 }
-Widget categoryProduct(context, apicategoryName, apicategoryImage) {
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(bottom: 10, top: 10),
-        child: Text(
-          "Products Categories ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      Container(
-        height: 300, // Set the desired height for the parent container
-        width: double.infinity,
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0,
+
+Widget categoryProduct(BuildContext context, List<String> apicategoryName,
+    List<String> apicategoryImage) {
+  // Assuming apicategoryName and apicategoryImage are lists of the same length
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10),
+          child: Text(
+            "Products Categories",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          itemCount: homeController.categoryProductList.length,
-          itemBuilder: ((context, index) {
-            return Container(
-              width: MediaQuery.of(context).size.width * 0.20,
-              decoration: BoxDecoration(border: Border.all(width: 1)),
-              margin: EdgeInsets.all(5),
-              child: Column(
-                children: [
-                  Text('${apicategoryName[index]}'),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    color: Colors.amberAccent,
-                    alignment: Alignment.center,
-                    child: Image.network(
-                      '${apicategoryImage[index]}',
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                ],
-              ),
-            );
-          }),
         ),
-      ),
-    ],
+        Container(
+          // height: MediaQuery.of(context).size.height * 0.35,
+          child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Number of columns
+                crossAxisSpacing: 10.0, // Spacing between the columns
+                mainAxisSpacing: 10.0,
+                mainAxisExtent: MediaQuery.of(context).size.height * 0.17,
+              ),
+              itemCount: homeController.categoryProductList.length,
+              itemBuilder: ((context, index) {
+                return Container(
+                  decoration: BoxDecoration(border: Border.all(width: 1),borderRadius: BorderRadius.circular(12)),
+                 
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.05 ,
+                        // color: Colors.cyanAccent,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5,right: 5),
+                            child: Text('${apicategoryName[index]}',style: TextStyle(color: Colors.blueAccent),textAlign:TextAlign.center,),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: CupertinoColors.activeGreen,
+                            width:double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.08,
+                            child: Image.network('${apicategoryImage[index]}',fit: BoxFit.fill,),),
+                      )
+                    ],
+                  ),
+                );
+              })),
+        )
+      ],
+    ),
   );
 }
