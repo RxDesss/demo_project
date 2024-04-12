@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.6
   carousel_slider: ^4.2.1
   image_picker: ^1.0.7
+  flick_video_player: ^0.7.0
+  video_player: ^2.8.6
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,8 @@ flutter:
     - assets/cimg/9.png
     - assets/cimg/10.png
     - assets/cimg/11.png
+    - assets/video1.mp4
+    
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

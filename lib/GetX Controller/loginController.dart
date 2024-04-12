@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController {
   List<dynamic> loginList = [].obs;
+  String userId='';
   final HomeContoller homeContoller=Get.put(HomeContoller());
 
   void _showAlertDialog(BuildContext context) {
@@ -45,12 +46,16 @@ class LoginController extends GetxController {
       final json = jsonDecode(body);
       loginList = json['data'];
       homeContoller.fetchDataAndNavigate(context);
-      // print(loginList);
+      print(loginList);
       // Get.to(() => HomeScreen());
       // Navigator.pushReplacementNamed(context,'/tabnavigation');
       // List<dynamic> data = json.decode(res.body)['data']; // Explicitly defining data type
       // loginList.value = data.map((item) => Login.fromJson(item)).toList();
       // print(data);
+       for (var obj in loginList) {
+          userId = obj['id'];
+      print('userId: $userId');
+    }
 
     } else {
       _showAlertDialog(context);
@@ -60,9 +65,9 @@ class LoginController extends GetxController {
     //     print("object  :");
     // print(jsonObject['user_name']);
 
-    for (var obj in loginList) {
-      String userName = obj['user_name'];
-      print('userName: $userName');
-    }
+    // for (var obj in loginList) {
+    //   String userName = obj['user_name'];
+    //   print('userName: $userName');
+    // }
   }
 }
