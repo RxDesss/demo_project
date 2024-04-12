@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
+import 'package:demo_project/GetX%20Controller/myorderController.dart';
 import 'package:demo_project/GetX%20Controller/navigationcontroller.dart';
 import 'package:demo_project/Screens/myOrders.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
 final LoginController loginController=Get.put(LoginController());
 final NavigationController navigationController=Get.put(NavigationController());
+final MyOrderController myOrderController=Get.put(MyOrderController());
 File? _selectedImage;
   String? userName;
   String? email;
@@ -58,7 +60,8 @@ void _pickedImage() async {
           IconButton(
             icon: Icon(Icons.receipt_long),
             onPressed: () {
-              Get.to(MyOrders() );
+               myOrderController.getMyOrder(loginController.userId);
+              // Get.to(()=>MyOrders() );
               print('Settings icon pressed');
             },
           ),
@@ -83,7 +86,7 @@ void _pickedImage() async {
         ):
         CircleAvatar(
           radius: 64,
-          backgroundImage: const NetworkImage("https://a.storyblok.com/f/191576/1200x800/215e59568f/round_profil_picture_after_.webp"),
+          backgroundImage: const NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
         ),
         Positioned(
           child: IconButton(

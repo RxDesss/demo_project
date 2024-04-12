@@ -51,5 +51,7 @@
 	<string>camera usage</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>microphone usage</string>
+		<key>NSAppTransportSecurity</key>
+	<string>video usage</string>
 </dict>
 </plist>
