@@ -1,5 +1,6 @@
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
+import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 final LoginController loginController = Get.put(LoginController());
 final HomeContoller homeController = Get.put(HomeContoller());
+final ProductDetailContoller productDetailContoller=Get.put(ProductDetailContoller());
 
 class _HomeScreenState extends State<HomeScreen> {
   String? userName;
@@ -23,6 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> apiproductImage = [];
   List<String> apicategoryName = [];
   List<String> apicategoryImage = [];
+  List<String> id=[];
+
+  void getProductDetail(id){
+    productDetailContoller.getProductDetail(id);
+  }
 
   void getData() {
     for (var obj in loginController.loginList) {
@@ -38,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         apiproductPrice.add(obj['product_price']);
         apiproductNames.add(obj['product_name']);
         apiproductImage.add(obj['product_image']);
+        id.add(obj["id"]);
         //  print("apiproductNames");
         // print(apiproductNames);
         //  print("apiproductPrice");
@@ -97,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               search(context),
               categoryImage(context, categoryImages),
               featureProducts(
-                  context, apiproductImage, apiproductPrice, apiproductNames),
+                  context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id),
               categoryProduct(context, apicategoryName, apicategoryImage)
             ],
           ),
@@ -273,7 +281,7 @@ Widget categoryImage(context, categoryImages) {
 }
 
 Widget featureProducts(
-    context, apiproductImage, apiproductPrice, apiproductNames) {
+    context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id) {
   return Column(
     children: [
       Padding(
@@ -291,61 +299,67 @@ Widget featureProducts(
           scrollDirection: Axis.horizontal,
           itemCount: homeController.featureProductList.length,
           itemBuilder: (context, index) {
-            return Container(
-              width: MediaQuery.of(context).size.width *
-                  0.30, // Set the width of each image container
-
-              margin: EdgeInsets.only(
-                  left: 10.0,
-                  right: index == apiproductImage.length - 1 ? 10.0 : 0),
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius:
-                    BorderRadius.circular(10.0), // Adjust the rounding here
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    color: Colors.amber,
-                    child: Image.network(
-                      apiproductImage[index],
-                      fit: BoxFit.cover,
+            return InkWell(
+              onTap: (){
+                // print(index);
+                getProductDetail(id[index]);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width *
+                    0.30, // Set the width of each image container
+              
+                margin: EdgeInsets.only(
+                    left: 10.0,
+                    right: index == apiproductImage.length - 1 ? 10.0 : 0),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  borderRadius:
+                      BorderRadius.circular(10.0), // Adjust the rounding here
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      color: Colors.amber,
+                      child: Image.network(
+                        apiproductImage[index],
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.13,
-                      height: MediaQuery.of(context).size.height * 0.022,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(15.0)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 3),
-                        child: Text(
-                          "\$${apiproductPrice[index]}",
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.13,
+                        height: MediaQuery.of(context).size.height * 0.022,
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 3),
+                          child: Text(
+                            "\$${apiproductPrice[index]}",
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: Container(
-                        height: MediaQuery.of(context).size.height * 0.068,
-                        child: Center(
-                            child: Text(
-                          "${apiproductNames[index]}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 11),
-                          overflow: TextOverflow.fade,
-                        ))),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Container(
+                          height: MediaQuery.of(context).size.height * 0.068,
+                          child: Center(
+                              child: Text(
+                            "${apiproductNames[index]}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 11),
+                            overflow: TextOverflow.fade,
+                          ))),
+                    )
+                  ],
+                ),
               ),
             );
           },

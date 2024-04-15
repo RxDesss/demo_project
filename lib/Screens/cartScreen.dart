@@ -10,8 +10,8 @@ class CartScreeen extends StatefulWidget {
 }
 
 class _CartScreeenState extends State<CartScreeen> {
-  // final FlickManager flickManager=FlickManager(videoPlayerController: VideoPlayerController.networkUrl(Uri.parse("https://videos.pexels.com/video-files/856382/856382-hd_1920_1080_30fps.mp4")));
-    final FlickManager flickManager=FlickManager(videoPlayerController: VideoPlayerController.asset('assets/video1.mp4'));
+  final FlickManager flickManager=FlickManager(videoPlayerController: VideoPlayerController.networkUrl(Uri.parse("https://videos.pexels.com/video-files/856382/856382-hd_1920_1080_30fps.mp4")));
+    // final FlickManager flickManager=FlickManager(videoPlayerController: VideoPlayerController.asset('assets/video1.mp4'));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
