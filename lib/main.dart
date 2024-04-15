@@ -1,6 +1,7 @@
 import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:demo_project/Screens/loginScreen.dart';
 import 'package:demo_project/Screens/myOrders.dart';
+import 'package:demo_project/Screens/productdetailScreen.dart';
 import 'package:demo_project/Screens/registerScreen.dart';
 import 'package:demo_project/Screens/tabNavigation.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/registescreen':(context)=>const RegisterScreen(),
         '/tabnavigation':(context)=>const TabNavigation(),
         '/myorders':(context)=>const MyOrders(),
+        '/productdetail':(context)=>const ProductDetailScreen(),
       },
     );
   }
