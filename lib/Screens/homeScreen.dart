@@ -1,6 +1,7 @@
 import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
+import 'package:demo_project/GetX%20Controller/searchproductController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 final LoginController loginController = Get.put(LoginController());
 final HomeContoller homeController = Get.put(HomeContoller());
 final ProductDetailContoller productDetailContoller=Get.put(ProductDetailContoller());
+final SearchProductController searchProductController=Get.put(SearchProductController());
 
 class _HomeScreenState extends State<HomeScreen> {
   String? userName;
@@ -185,13 +187,15 @@ Widget search(BuildContext context) {
       children: [
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.05,
-          width: MediaQuery.of(context).size.width * 0.38,
+          width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
             ),
-            onPressed: () {},
+            onPressed: () {
+              searchProductController.fetchAllProduct();
+            },
             // Update starts here
             child: Row(
               mainAxisSize:
@@ -200,7 +204,7 @@ Widget search(BuildContext context) {
                 Icon(Icons.search, size: 20.0), // Adjust the size as needed
                 SizedBox(width: 4), // Space between icon and text
                 Text(
-                  'Search Code',
+                  'Search Product',
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -210,7 +214,7 @@ Widget search(BuildContext context) {
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.05,
-          width: MediaQuery.of(context).size.width * 0.38,
+          width: MediaQuery.of(context).size.width * 0.42,
           child: TextButton(
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
