@@ -1,3 +1,4 @@
+import 'package:demo_project/Screens/QRScanPage.dart';
 import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:demo_project/Screens/loginScreen.dart';
 import 'package:demo_project/Screens/myOrders.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/myorders':(context)=>const MyOrders(),
         '/productdetail':(context)=>const ProductDetailScreen(),
         '/searchproduct':(context)=>const SearchProduct(),
+        '/qrscanpage':(context)=>QRScanPage(),
       },
     );
   }

@@ -2,11 +2,13 @@ import 'package:demo_project/GetX%20Controller/homeController.dart';
 import 'package:demo_project/GetX%20Controller/loginController.dart';
 import 'package:demo_project/GetX%20Controller/productdetailController.dart';
 import 'package:demo_project/GetX%20Controller/searchproductController.dart';
+import 'package:demo_project/Screens/QRScanPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -220,7 +222,9 @@ Widget search(BuildContext context) {
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.to(()=>QRScanPage());
+            },
             // Update starts here
             child: Row(
               mainAxisSize:
