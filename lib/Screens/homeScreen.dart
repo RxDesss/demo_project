@@ -30,6 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> apicategoryName = [];
   List<String> apicategoryImage = [];
   List<String> id=[];
+  List<String> apicategoryId=[];
+ 
+
 
   void getProductDetail(id){
     productDetailContoller.getProductDetail(id);
@@ -63,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         apicategoryName.add(obj['name']);
         apicategoryImage.add(obj['image']);
+        apicategoryId.add(obj['id']);
         // print(apicategoryName);
       });
     }
@@ -110,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               categoryImage(context, categoryImages),
               featureProducts(
                   context, apiproductImage, apiproductPrice, apiproductNames,getProductDetail,id),
-              categoryProduct(context, apicategoryName, apicategoryImage)
+              categoryProduct(context, apicategoryName, apicategoryImage,apicategoryId)
             ],
           ),
         ),
@@ -331,7 +335,7 @@ Widget featureProducts(
                     Container(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.08,
-                      color: Colors.amber,
+                      // color: Colors.amber,
                       child: Image.network(
                         apiproductImage[index],
                         fit: BoxFit.cover,
@@ -378,7 +382,7 @@ Widget featureProducts(
 }
 
 Widget categoryProduct(BuildContext context, List<String> apicategoryName,
-    List<String> apicategoryImage) {
+    List<String> apicategoryImage, List<String> apicategoryId) {
   // Assuming apicategoryName and apicategoryImage are lists of the same length
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -405,31 +409,36 @@ Widget categoryProduct(BuildContext context, List<String> apicategoryName,
               ),
               itemCount: homeController.categoryProductList.length,
               itemBuilder: ((context, index) {
-                return Container(
-                  decoration: BoxDecoration(border: Border.all(width: 1),borderRadius: BorderRadius.circular(12)),
-                 
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.05 ,
-                        // color: Colors.cyanAccent,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5,right: 5),
-                            child: Text('${apicategoryName[index]}',style: TextStyle(color: Colors.blueAccent),textAlign:TextAlign.center,),
+                return InkWell(
+                  onTap: (){
+                    homeController.getSubList(context,apicategoryId[index],apicategoryName[index]);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(border: Border.all(width: 1),borderRadius: BorderRadius.circular(12)),
+                   
+                    child: Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.05 ,
+                          // color: Colors.cyanAccent,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5,right: 5),
+                              child: Text('${apicategoryName[index]}',style: TextStyle(color: Colors.blueAccent),textAlign:TextAlign.center,),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          color: CupertinoColors.activeGreen,
-                            width:double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.08,
-                            child: Image.network('${apicategoryImage[index]}',fit: BoxFit.fill,),),
-                      )
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            // color: CupertinoColors.activeGreen,
+                              width:double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              child: Image.network('${apicategoryImage[index]}',fit: BoxFit.fill,),),
+                        )
+                      ],
+                    ),
                   ),
                 );
               })),

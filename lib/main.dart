@@ -2,9 +2,13 @@ import 'package:demo_project/Screens/QRScanPage.dart';
 import 'package:demo_project/Screens/homeScreen.dart';
 import 'package:demo_project/Screens/loginScreen.dart';
 import 'package:demo_project/Screens/myOrders.dart';
+import 'package:demo_project/Screens/noCategoryScreen.dart';
 import 'package:demo_project/Screens/productdetailScreen.dart';
 import 'package:demo_project/Screens/registerScreen.dart';
 import 'package:demo_project/Screens/searchProduct.dart';
+import 'package:demo_project/Screens/shippingScreen.dart';
+import 'package:demo_project/Screens/subCategoyScreen.dart';
+import 'package:demo_project/Screens/subsubCategoryScreen.dart';
 import 'package:demo_project/Screens/tabNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +33,10 @@ class MyApp extends StatelessWidget {
         '/productdetail':(context)=>const ProductDetailScreen(),
         '/searchproduct':(context)=>const SearchProduct(),
         '/qrscanpage':(context)=>QRScanPage(),
+        '/nocategory':(context)=>NoCategoryPage(),
+        '/subcategory':(context)=>SubCategoryScreen(),
+        '/subsubcategory':(context)=>SubSubCategoryPage(),
+        '/shippingscreen':(context)=>ShippingScreen(),
       },
     );
   }

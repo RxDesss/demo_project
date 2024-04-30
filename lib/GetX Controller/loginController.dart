@@ -40,7 +40,7 @@ class LoginController extends GetxController {
   void fetchLogin(username, password, context) async {
     String url =
         'https://www.texasknife.com/dynamic/texasknifeapi.php?action=static_login&email=$username&password=$password';
-    // print(url);
+    print(url);
     var res = await http.get(Uri.parse(url));
     if (res.statusCode == 200) {
       final body = res.body;

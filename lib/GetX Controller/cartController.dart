@@ -8,9 +8,11 @@ import 'package:http/http.dart' as http;
 
 class CartController extends GetxController{
     final LoginController loginController=Get.put(LoginController());
+      RxBool isLoadingCartAPI = true.obs;
     List<dynamic> Data=[].obs ;
     List<dynamic> cartData=[].obs;
    String Message="";
+   late double totalAmount =0;
 
   Future<void>getAddToCart(  productId,productQuantity,productSku,productPrice)async{
 
@@ -55,7 +57,15 @@ class CartController extends GetxController{
     if (response.statusCode == 200) {
       final body = response.body;
       final json = jsonDecode(body);
+      cartData=json['data'];
+      isLoadingCartAPI.value=false;
       List<dynamic> data = json['data'];
+      print("Cart Items data list : ${data}");
+                                  data.forEach((item) {
+                                    totalAmount += item['total'];
+                                  });
+                                
+    
 
       // Assuming each item in data is a map
       return List<Map<String, dynamic>>.from(data);
