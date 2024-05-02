@@ -1,65 +1,53 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:demo_project/GetX%20Controller/addressControlle.dart';
 import 'package:demo_project/GetX%20Controller/cartController.dart';
 import 'package:demo_project/GetX%20Controller/shippingControlle.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
-class ShippingScreen extends StatelessWidget {
-  const ShippingScreen({Key? key}) : super(key: key);
+class CheckoutScreen extends StatefulWidget {
+  const CheckoutScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final CartController cartController = Get.find();
-    final ShippingController shippingController = Get.find();
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
 
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  final CartController cartController=Get.put(CartController());
+  final ShippingController shippingController=Get.put(ShippingController());
+  final AddressController addressController=Get.put(AddressController());
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shipping"),
+        title: Text("Checkout"),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 9,
-              child: Container(
-                color: Color.fromARGB(255, 183, 244, 252),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(() {
-                        if (cartController.isLoadingCartAPI.value) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        return orderItemsSection(context, cartController,shippingController);
-                      }),
-                      Obx(() {
-                        if (shippingController.isLoadingShippingAPI.value) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        return taxItemSection(context, shippingController);
-                      }),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: ElevatedButton(
-                onPressed: () {
-                  shippingController.fetchContinueToPayment();
-                },
-                child: Text("Payment"),
-              ),
-            ),
-          ],
-        ),
-      ),
+          child: Column(
+            children: [
+              Expanded(
+                flex:13,
+                child: Content(context, cartController, shippingController,addressController)),
+              Expanded(
+                 flex:1,
+                child: button(shippingController,context))
+            ],
+          ) ,),
     );
   }
+}
+
+Widget Content(context, cartController, shippingController,addressController){
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+     orderItemsSection(context, cartController, shippingController),
+     addressMetodPaywith_Section(context,cartController, shippingController,addressController)
+      ],
+    ),
+  );
 }
 
 Widget orderItemsSection(BuildContext context, CartController cartController,shippingController) {
@@ -183,75 +171,91 @@ Widget orderItemsSection(BuildContext context, CartController cartController,shi
   );
 }
 
-Widget taxItemSection(BuildContext context, ShippingController shippingController) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text("Shipping Method",style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),),
-      ),
-      Container(
-        height: MediaQuery.of(context).size.height *0.3,
-        width:double.infinity,
-        color: Colors.deepOrange[50],
-        child: shippingController.shippingMethodsData.isNotEmpty ? Obx(
-          () => ListView.builder(
-            itemCount: shippingController.shippingMethodsData[0]['shipping'].split(',').length,
-            itemBuilder: (BuildContext context, int index) {
-              final String option =  shippingController.shippingMethodsData[0]['shipping'].split(',')[index];
-              final String optionName = option.split('||')[0];
-              final String optionValue = option.split('||')[1];
 
-              return ShippingOptionTile(
-                optionName: optionName,
-                optionValue: optionValue,
-              );
-            },
-          ),
-        ) : Center(child: Text('No shipping methods available')),
-      ),
-    ],
+Widget addressMetodPaywith_Section(context,cartController, shippingController,addressController){
+  return Container(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(10),
+    child: Column(
+      children: [
+       Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Contact"),
+          Text(addressController.AddressDatas[0]['bill_email1'])
+        ],
+       ),
+       dividerFunction(context),
+  repeatAddress(context,cartController, shippingController,addressController,"Shipping To"),
+      dividerFunction(context),
+   repeatAddress(context,cartController, shippingController,addressController,"Billing To"),
+    dividerFunction(context),
+     Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("PayWith"),
+          Text('${shippingController.PayWith}')
+        ],
+       ),
+      ],
+    ),
   );
 }
 
-class ShippingOptionTile extends StatefulWidget {
-  final String optionName;
-  final String optionValue;
 
-  const ShippingOptionTile({
-    Key? key,
-    required this.optionName,
-    required this.optionValue,
-  }) : super(key: key);
-
-  @override
-  _ShippingOptionTileState createState() => _ShippingOptionTileState();
+Widget repeatAddress(context,cartController, shippingController,addressController,heading){
+  return Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(heading),
+          Container(
+            width: MediaQuery.of(context).size.width*0.5,
+            alignment: Alignment.centerRight,
+            // color: Colors.amber,
+            child: Column(
+              
+              children: [
+               Text("${addressController.AddressDatas[0]['bill_name']}",textAlign:TextAlign.right,),
+               Text("${addressController.AddressDatas[0]['bill_l_name']}",textAlign:TextAlign.right,), 
+               Text("${addressController.AddressDatas[0]['bill_address1']}",textAlign:TextAlign.right,), 
+               Text("${addressController.AddressDatas[0]['bill_address2']}",textAlign:TextAlign.right,),
+               Text("${addressController.AddressDatas[0]['bill_town_city']}",textAlign:TextAlign.right,),
+               Text("${addressController.AddressDatas[0]['bill_state_region1']}",textAlign:TextAlign.right,),
+               Text("${addressController.AddressDatas[0]['bill_country']}",textAlign:TextAlign.right,),
+               Text("${addressController.AddressDatas[0]['bill_zip_code']}",textAlign:TextAlign.right,),
+              ],
+            ),
+          )
+        ],
+       );
 }
 
-class _ShippingOptionTileState extends State<ShippingOptionTile> {
-  final ShippingController shippingController=Get.put(ShippingController());
-  bool _isSelected = false;
+Widget dividerFunction(context){
+  return  Divider(
+          color: Colors.black,
+          height: MediaQuery.of(context).size.height *
+              0.03, // Total height of the divider including space
+          thickness: 2, // Thickness of the line itself
+          indent: MediaQuery.of(context).size.height *
+              0.01, // Starting space of the line
+          endIndent: MediaQuery.of(context).size.height *
+              0.01, // Ending space of the line
+        );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return RadioListTile(
-      title: Text(widget.optionName),
-      value: widget.optionValue,
-      groupValue: _isSelected ? widget.optionName : null,
-      onChanged: (value) {
-        shippingController.shippingMethodTax.value=value!;
-        shippingController.shippingMethodTaxName.value="${widget.optionName}-${widget.optionValue}";
-        shippingController.getEstimatedSalesTax();
-        setState(() {
-          print(value);
-          _isSelected = true;
-          
-
-        });
-        // Add your logic here when a radio button is selected
-      },
-      subtitle: Text(widget.optionValue),
-    );
-  }
+Widget button(shippingController,context){
+  return Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(left: 30, right: 30),
+                      decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(25)),
+                      child: TextButton(
+                        onPressed: () {
+                             shippingController.fetchPlaceOrder(context);
+                        },
+                        child: Text("Place Order"),
+                      ),
+                    );
 }
