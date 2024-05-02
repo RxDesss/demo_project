@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class PaymentCotroller extends GetxController{
      
   RxList<dynamic> paymentApiData = <dynamic>[].obs;
+  
    Future<void> fetchPayment()async{
     String url='';
     print("fetchPayment Api : $url");
