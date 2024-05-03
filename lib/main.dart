@@ -14,6 +14,10 @@ import 'package:demo_project/Screens/tabNavigation.dart';
 import 'package:demo_project/Screens/paymentScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+
+// Create a global logger
+var logger = Logger();
 
 void main() {
   runApp(const MyApp());

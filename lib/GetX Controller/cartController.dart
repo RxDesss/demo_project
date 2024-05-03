@@ -14,7 +14,7 @@ class CartController extends GetxController {
   double totalAmount = 0.0; // Change to regular double
   RxDouble totalAmount1 = 0.0.obs;
 
-  Future<void> getAddToCart(productId, productQuantity, productSku, productPrice) async {
+  Future<void> getAddToCart(productId, productQuantity, productSku, productPrice,context) async {
     print(productId);
     print(productQuantity);
     print(productSku);
@@ -31,6 +31,7 @@ class CartController extends GetxController {
       Data = json['data'];
       print("Cart Added Success");
       print(Data);
+      Navigator.pushReplacementNamed(context, '/tabnavigation');
     }
   }
 
