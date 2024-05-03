@@ -59,23 +59,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.amber,
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.fill,
-                ),
+            Container(
+              width: double.infinity,
+              height:MediaQuery.of(context).size.height * 0.3,
+              // color: Colors.amber,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.fill,
               ),
             ),
             Expanded(
-              flex: 7,
+              // flex: 7,
               child: SingleChildScrollView(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
+                  // height:MediaQuery.of(context).size.height * 0.6,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 170, 168, 167),
                   ),
@@ -121,7 +119,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           FloatingActionButton.extended(
                             onPressed: () {
                               cartController.getAddToCart(
-                                productId,productQuantity,productSku,productPrice
+                                productId,productQuantity,productSku,productPrice,context
                               );
                               // Add your onPressed function here
                               
